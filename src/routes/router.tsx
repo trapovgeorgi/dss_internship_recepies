@@ -4,15 +4,15 @@ import HomePage from "../pages/HomePage";
 import ErrorPage from "../pages/ErrorPage";
 
 export const router = createBrowserRouter([
-	{
-		path: "/",
-		element: <MainLayout />,
-    errorElement: <ErrorPage/>,
-		children: [
-			{
-				index: true,
-				element: <HomePage />,
-			},
-		],
-	},
+  {
+    path: "/",
+    element: <MainLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <HomePage />,
+      },
+    ],
+  },
 ]);
