@@ -41,7 +41,7 @@ export default function RecipeItem({ recipe }: { recipe: Recipe }) {
       <p className="field1">Name: {recipe.name}</p>
       <p className="field2">Ingredients: {recipe.ingredients}</p>
       <p className="field3">Instructions: {recipe.instructions}</p>
-      <p className="field4">Cooking Time: {recipe.cookingTime}</p>
+      <p className="field4">Cooking Time: {recipe.cookingTime} {recipe.cookingTime > 1 ? "hours" : "hour"}</p>
       <p className="field5">Publication Date: {recipe.publicationDate.toISOString().split("T")[0]}</p>
       <Button className="deleteButton" text="Delete" onClick={handleDelete}/>
     </li>

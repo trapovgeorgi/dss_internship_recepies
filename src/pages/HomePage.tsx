@@ -8,7 +8,7 @@ export default function HomePage() {
     <div>
       <div className="h-[30rem] relative">
         <div className="absolute h-[10rem] w-[10rem] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-          <img className="animate-spin" src={pizzaSVG}/>
+          <img className="animate-bounce" src={pizzaSVG}/>
         </div>
         <img className="object-cover h-full w-full" src={recipeWideIMG} />
       </div>

@@ -58,7 +58,7 @@ export function generateRecipe() {
 
 export function generateRecipeList() {
   const recipes = [];
-  for (let i = 0; i < getRandomArbitrary(5, 10); i++) {
+  for (let i = 0; i < getRandomArbitrary(2, 4); i++) {
     recipes.push(generateRecipe());
     recipes[i].id = i + 1;
   }

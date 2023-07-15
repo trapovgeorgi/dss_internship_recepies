@@ -9,6 +9,7 @@ export default function RecipesList() {
       <ul className="flex justify-center items-center gap-8 flex-wrap">
         {recipes.map(recipe => <RecipeItem key={recipe.id} recipe={recipe} />)}
       </ul>
+      {recipes.length <= 0 && <span className="text-xl font-bold">No Recipes, Add some...</span>}
     </div>
   );
 }

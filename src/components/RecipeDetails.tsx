@@ -12,16 +12,16 @@ export default function RecipeDetails() {
   const { recipeDetail, setRecipeDetail } = useContext(RecipeDetailContext);
   const { recipes, setRecipes } = useContext(RecipesContext);
 
+  const [id, setId] = useInput<number | null>(0);
   const [name, setName] = useInput("");
   const [ingredients, setIngredients] = useInput("");
   const [instructions, setInstructions] = useInput("");
   const [cookingTime, setCookingTime] = useInput("");
-  const [publicationDate, setPublicationDate] = useInput(
-    dateToInput(new Date()),
-  );
+  const [publicationDate, setPublicationDate] = useInput("");
 
   useEffect(() => {
     if (recipeDetail) {
+      setId(recipeDetail?.id);
       setName(recipeDetail?.name.toString());
       setIngredients(recipeDetail?.ingredients);
       setInstructions(recipeDetail?.instructions);
@@ -52,6 +52,16 @@ export default function RecipeDetails() {
     setRecipeDetail?.(null);
   }
 
+  function handleClear() {
+    setId(null);
+    setName("");
+    setIngredients("");
+    setInstructions("");
+    setCookingTime("");
+    setPublicationDate("");
+    setRecipeDetail?.(null);
+  }
+
   return (
     <div className="content-details flex items-center justify-center">
       <div className="flex flex-col gap-4">
@@ -76,7 +86,7 @@ export default function RecipeDetails() {
           {...publicationDate}
         />
         <Button id="saveButton" text="Save" onClick={handleAdd} />
-        <Button id="clearButton" text="Clear" onClick={handleAdd} />
+        <Button id="clearButton" text="Clear" onClick={handleClear} />
       </div>
     </div>
   );
