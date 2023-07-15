@@ -1,7 +1,8 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { RecipesContext } from "../contexts/recipesContext";
 import { RecipeDetailContext } from "../contexts/recipeDetailContext";
 import Button from "./Form/Button";
+import anime from "animejs";
 
 export default function RecipeItem({ recipe }: { recipe: Recipe }) {
   const { recipes, setRecipes } = useContext(RecipesContext);
@@ -15,20 +16,32 @@ export default function RecipeItem({ recipe }: { recipe: Recipe }) {
       newRecipe.id = i++;
     }
     setRecipes?.([...newRecipes]);
+    anime({
+      targets: "li",
+      scale: [0, 1],
+    })
   }
 
   function handleFocus() {
     setRecipeDetail?.(recipe);
   }
 
+  useEffect(() => {
+    anime({
+      targets: "li",
+      scale: [0, 1],
+      delay: anime.stagger(100)
+    })
+  }, [])
+  
   return (
-    <li onClick={handleFocus} className="flex w-[10rem] flex-col items-start justify-center bg-orange-400 p-4">
-      <p className="id">{recipe.id}</p>
-      <p className="field1">{recipe.name}</p>
-      <p className="field2">{recipe.ingredients}</p>
-      <p className="field3">{recipe.instructions}</p>
-      <p className="field4">{recipe.cookingTime}</p>
-      <p className="field5">{recipe.publicationDate.toLocaleString()}</p>
+    <li onClick={handleFocus} className="flex w-[20rem] flex-col items-start justify-center bg-palette1 text-palette2 p-4 gap-2 rounded-tl-xl rounded-br-xl hover:bg-palette1/80 cursor-pointer">
+      <p className="id">Id: {recipe.id}</p>
+      <p className="field1">Name: {recipe.name}</p>
+      <p className="field2">Ingredients: {recipe.ingredients}</p>
+      <p className="field3">Instructions: {recipe.instructions}</p>
+      <p className="field4">Cooking Time: {recipe.cookingTime}</p>
+      <p className="field5">Publication Date: {recipe.publicationDate.toISOString().split("T")[0]}</p>
       <Button text="Delete" onClick={handleDelete}/>
     </li>
   );

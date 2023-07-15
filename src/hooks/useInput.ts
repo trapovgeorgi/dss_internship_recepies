@@ -1,10 +1,10 @@
 import { ChangeEvent, useState } from "react";
 
-export function useInput(initialValue: string) {
+export function useInput<T>(initialValue: T) {
   const [value, setValue] = useState(initialValue);
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
-    setValue(e.target.value);
+    setValue(e.target.value as T);
   }
 
   const inputProps = {
@@ -14,10 +14,10 @@ export function useInput(initialValue: string) {
 
   const rval: [
     {
-      value: string;
+      value: T;
       onChange: (e: ChangeEvent<HTMLInputElement>) => void;
     },
-    React.Dispatch<React.SetStateAction<string>>,
+    React.Dispatch<React.SetStateAction<T>>,
   ] = [inputProps, setValue];
 
   return rval;

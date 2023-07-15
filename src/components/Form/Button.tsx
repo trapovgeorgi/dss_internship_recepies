@@ -5,5 +5,12 @@ type Props = {
   onClick: MouseEventHandler<HTMLButtonElement>;
 };
 export default function Button({ text, onClick }: Props) {
-  return <button className="py-1 px-2 bg-white rounded-md hover:bg-blue-300" onClick={onClick}>{text}</button>;
+  return (
+    <button
+      className="rounded-md bg-palette2 px-4 py-1 text-palette1 transition-colors hover:bg-palette1 hover:text-palette2 "
+      onClick={onClick}
+    >
+      {text}
+    </button>
+  );
 }

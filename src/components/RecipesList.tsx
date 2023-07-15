@@ -6,7 +6,7 @@ export default function RecipesList() {
   const { recipes } = useContext(RecipesContext);
   return (
     <div className="content-list">
-      <ul>
+      <ul className="flex justify-center items-center gap-8 flex-wrap">
         {recipes.map(recipe => <RecipeItem key={recipe.id} recipe={recipe} />)}
       </ul>
     </div>
