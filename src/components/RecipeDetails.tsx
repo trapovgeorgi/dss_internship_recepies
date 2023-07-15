@@ -5,34 +5,33 @@ import { RecipesContext } from "../contexts/recipesContext";
 import { useInput } from "../hooks/useInput";
 import Input from "./Form/Input";
 import Button from "./Form/Button";
+import { Recipe } from "../interfaces/interfaces";
+import { dateToInput } from "../utils/dates";
 
 export default function RecipeDetails() {
   const { recipeDetail, setRecipeDetail } = useContext(RecipeDetailContext);
   const { recipes, setRecipes } = useContext(RecipesContext);
 
+  const [name, setName] = useInput("");
+  const [ingredients, setIngredients] = useInput("");
+  const [instructions, setInstructions] = useInput("");
+  const [cookingTime, setCookingTime] = useInput("");
+  const [publicationDate, setPublicationDate] = useInput(
+    dateToInput(new Date()),
+  );
+
   useEffect(() => {
     if (recipeDetail) {
       setName(recipeDetail?.name.toString());
-      setIngredients(recipeDetail?.ingredients.toString());
-      setInstructions(recipeDetail?.instructions.toString());
+      setIngredients(recipeDetail?.ingredients);
+      setInstructions(recipeDetail?.instructions);
       setCookingTime(recipeDetail?.cookingTime.toString());
       setPublicationDate(dateToInput(recipeDetail?.publicationDate));
     }
   }, [recipeDetail]);
 
-  function dateToInput(date: Date) {
-    return date.toISOString().split("T")[0]
-  }
-
-  const [name, setName] = useInput("");
-  const [ingredients, setIngredients] = useInput("");
-  const [instructions, setInstructions] = useInput("");
-  const [cookingTime, setCookingTime] = useInput("");
-  const [publicationDate, setPublicationDate] = useInput(dateToInput(new Date()));
-
   function handleAdd() {
     const newRecipes = recipes.sort((a, b) => a.id - b.id);
-    console.log(newRecipes);
     const createdRecipe: Recipe = {
       id: 0,
       name: name.value,
@@ -54,14 +53,30 @@ export default function RecipeDetails() {
   }
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="content-details flex items-center justify-center">
       <div className="flex flex-col gap-4">
-        <Input label="Name" {...name} />
-        <Input label="Ingredients" {...ingredients} />
-        <Input label="Instructions" type="text" {...instructions} />
-        <Input label="Cooking Time" type="number" {...cookingTime} />
-        <Input label="Publication Date" type="date" {...publicationDate} />
-        <Button text="Add" onClick={handleAdd} />
+        <Input id={"field1"} label="Name" {...name} />
+        <Input id={"field2"} label="Ingredients" {...ingredients} />
+        <Input
+          id={"field3"}
+          label="Instructions"
+          type="text"
+          {...instructions}
+        />
+        <Input
+          id={"field4"}
+          label="Cooking Time"
+          type="number"
+          {...cookingTime}
+        />
+        <Input
+          id={"field5"}
+          label="Publication Date"
+          type="date"
+          {...publicationDate}
+        />
+        <Button id="saveButton" text="Save" onClick={handleAdd} />
+        <Button id="clearButton" text="Clear" onClick={handleAdd} />
       </div>
     </div>
   );

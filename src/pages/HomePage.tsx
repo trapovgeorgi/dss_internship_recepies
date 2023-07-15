@@ -1,12 +1,16 @@
 import RecipesList from "../components/RecipesList";
 import RecipeDetails from "../components/RecipeDetails";
-import recipeWide from "../assets/recipe-wide.jpeg";
+import recipeWideIMG from "../assets/recipe-wide.jpeg";
+import pizzaSVG from "../assets/pizza.svg";
 
 export default function HomePage() {
   return (
     <div>
-      <div className="h-[30rem]">
-        <img className="object-cover h-full w-full" src={recipeWide} />
+      <div className="h-[30rem] relative">
+        <div className="absolute h-[10rem] w-[10rem] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <img className="animate-spin" src={pizzaSVG}/>
+        </div>
+        <img className="object-cover h-full w-full" src={recipeWideIMG} />
       </div>
       <div className="grid sm:grid-cols-6">
         <div className="flex items-center justify-center bg-palette2 text-palette1 py-8 sm:col-span-4">

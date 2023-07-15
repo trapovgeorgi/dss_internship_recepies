@@ -3,6 +3,7 @@ import { RecipesContext } from "../contexts/recipesContext";
 import { RecipeDetailContext } from "../contexts/recipeDetailContext";
 import Button from "./Form/Button";
 import anime from "animejs";
+import { Recipe } from "../interfaces/interfaces";
 
 export default function RecipeItem({ recipe }: { recipe: Recipe }) {
   const { recipes, setRecipes } = useContext(RecipesContext);
@@ -42,7 +43,7 @@ export default function RecipeItem({ recipe }: { recipe: Recipe }) {
       <p className="field3">Instructions: {recipe.instructions}</p>
       <p className="field4">Cooking Time: {recipe.cookingTime}</p>
       <p className="field5">Publication Date: {recipe.publicationDate.toISOString().split("T")[0]}</p>
-      <Button text="Delete" onClick={handleDelete}/>
+      <Button className="deleteButton" text="Delete" onClick={handleDelete}/>
     </li>
   );
 }
