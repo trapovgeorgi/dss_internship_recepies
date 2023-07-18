@@ -8,7 +8,7 @@ import { Recipe } from "./interfaces/interfaces";
 
 export default function App() {
   const [recipes, setRecipes] = useState<Array<Recipe>>(generateRecipeList());
-  const [recipeDetail, setRecipeDetail] = useState<Recipe | null>(null);
+  const [recipeDetail, setRecipeDetail] = useState<Recipe | undefined>(undefined);
   return (
     <RecipesContext.Provider value={{ recipes, setRecipes }}>
       <RecipeDetailContext.Provider value={{ recipeDetail, setRecipeDetail }}>

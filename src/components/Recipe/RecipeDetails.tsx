@@ -1,18 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect } from "react";
-import { RecipeDetailContext } from "../contexts/recipeDetailContext";
-import { RecipesContext } from "../contexts/recipesContext";
-import { useInput } from "../hooks/useInput";
-import Input from "./Form/Input";
-import Button from "./Form/Button";
-import { Recipe } from "../interfaces/interfaces";
-import { dateToInput } from "../utils/dates";
+import { RecipeDetailContext } from "../../contexts/recipeDetailContext";
+import { RecipesContext } from "../../contexts/recipesContext";
+import { useInput } from "../../hooks/useInput";
+import Input from "../Form/Input";
+import Button from "../Form/Button";
+import { Recipe } from "../../interfaces/interfaces";
+import { dateToInput } from "../../utils/dates";
+import { addRecipe, changeRecipe, checkInputs } from "./recipe-details-helpers";
 
 export default function RecipeDetails() {
   const { recipeDetail, setRecipeDetail } = useContext(RecipeDetailContext);
   const { recipes, setRecipes } = useContext(RecipesContext);
 
-  const [id, setId] = useInput<number | null>(0);
+  const [error, setError] = useInput("");
+
+  const [id, setId] = useInput(0);
   const [name, setName] = useInput("");
   const [ingredients, setIngredients] = useInput("");
   const [instructions, setInstructions] = useInput("");
@@ -27,44 +30,63 @@ export default function RecipeDetails() {
       setInstructions(recipeDetail?.instructions);
       setCookingTime(recipeDetail?.cookingTime.toString());
       setPublicationDate(dateToInput(recipeDetail?.publicationDate));
+    } else {
+      clearInputs();
     }
   }, [recipeDetail]);
 
-  function handleAdd() {
-    const newRecipes = recipes.sort((a, b) => a.id - b.id);
+  useEffect(() => {
+    console.log(recipeDetail);
+  }, [recipeDetail]);
+
+  function handleSave(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    e.preventDefault();
+    const isOkInputs = checkInputs(
+      setError,
+      name.value,
+      ingredients.value,
+      instructions.value,
+      cookingTime.value,
+      publicationDate.value,
+    );
+    if (!isOkInputs) return;
+
+    let newRecipes = [...recipes];
     const createdRecipe: Recipe = {
-      id: 0,
+      id: id.value,
       name: name.value,
       ingredients: ingredients.value,
       instructions: instructions.value,
       cookingTime: Number(cookingTime.value),
       publicationDate: new Date(publicationDate.value),
     };
-
-    newRecipes.push(createdRecipe);
-
-    let i = 1;
-    for (const newRecipe of newRecipes) {
-      newRecipe.id = i++;
+    if (id.value != 0) {
+      newRecipes = changeRecipe(newRecipes, createdRecipe);
+    } else {
+      newRecipes = addRecipe(newRecipes, createdRecipe);
     }
-
-    setRecipes?.([...newRecipes]);
-    setRecipeDetail?.(null);
+    setRecipes?.(newRecipes);
+    setRecipeDetail?.(undefined);
   }
 
-  function handleClear() {
-    setId(null);
+  function clearInputs() {
+    setId(0);
     setName("");
     setIngredients("");
     setInstructions("");
     setCookingTime("");
     setPublicationDate("");
-    setRecipeDetail?.(null);
+    setRecipeDetail?.(undefined);
+  }
+  function handleClear(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    e.preventDefault();
+    clearInputs();
   }
 
   return (
     <div className="content-details flex items-center justify-center">
-      <div className="flex flex-col gap-4">
+      <form className="flex flex-col gap-4 w-[10rem]">
+        <p className="text-red-500 break-normal">{error.value}</p>
         <Input id={"field1"} label="Name" {...name} />
         <Input id={"field2"} label="Ingredients" {...ingredients} />
         <Input
@@ -85,9 +107,9 @@ export default function RecipeDetails() {
           type="date"
           {...publicationDate}
         />
-        <Button id="saveButton" text="Save" onClick={handleAdd} />
+        <Button id="saveButton" text="Save" onClick={handleSave} />
         <Button id="clearButton" text="Clear" onClick={handleClear} />
-      </div>
+      </form>
     </div>
   );
 }

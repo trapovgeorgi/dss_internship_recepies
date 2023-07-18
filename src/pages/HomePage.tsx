@@ -1,5 +1,5 @@
-import RecipesList from "../components/RecipesList";
-import RecipeDetails from "../components/RecipeDetails";
+import RecipesList from "../components/Recipe/RecipesList";
+import RecipeDetails from "../components/Recipe/RecipeDetails";
 import recipeWideIMG from "../assets/recipe-wide.jpeg";
 import pizzaSVG from "../assets/pizza.svg";
 

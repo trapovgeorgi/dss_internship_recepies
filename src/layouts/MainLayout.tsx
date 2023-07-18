@@ -4,7 +4,7 @@ import Header from "./Header";
 
 export default function MainLayout() {
 	return (
-		<div className="bg-palette2 text-palette1">
+		<div className="bg-palette2 text-palette1 min-h-screen">
 			<Header />
 			<Outlet />
 			<Footer />
