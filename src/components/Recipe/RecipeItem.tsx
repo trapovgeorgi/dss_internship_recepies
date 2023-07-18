@@ -23,7 +23,7 @@ export default function RecipeItem({ recipe }: { recipe: Recipe }) {
     }
     anime({
       targets: "li",
-      scale: [0, 1],
+      scale: [0.5, 1],
     });
   }
 
@@ -34,7 +34,7 @@ export default function RecipeItem({ recipe }: { recipe: Recipe }) {
   useEffect(() => {
     anime({
       targets: "li",
-      scale: [0, 1],
+      scale: [0.5, 1],
       delay: anime.stagger(100),
     });
   }, []);
@@ -54,7 +54,7 @@ export default function RecipeItem({ recipe }: { recipe: Recipe }) {
         {recipe.cookingTime > 1 ? "hours" : "hour"}
       </p>
       <p className="field5">
-        Publication Date: {recipe.publicationDate.toISOString().split("T")[0]}
+        Publication Date: {recipe.publicationDate.toString()}
       </p>
       <Button className="deleteButton" text="Delete" onClick={handleDelete} />
     </li>
